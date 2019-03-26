@@ -8,7 +8,7 @@ export default {
   install (Vue, options = {}) {
     container.Vue = Vue
     YouTubePlayer.ready = YouTubePlayer.mounted
-    const { global = true, componentId = 'youtube' } = options
+    const { global = true, componentId = 'youtube', host = 'https://www.youtube.com' } = options
 
     if (global) {
       // if there is a global component with "youtube" identifier already taken
@@ -18,6 +18,13 @@ export default {
     Vue.prototype.$youtube = { getIdFromURL, getTimeFromURL }
 
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      if (!window['YTConfig']) {
+        window.YTConfig = {
+          'host': host
+        }
+      } else {
+        window.YTConfig['host'] = host
+      }
       const tag = document.createElement('script')
       tag.src = 'https://www.youtube.com/player_api'
       const firstScriptTag = document.getElementsByTagName('script')[0]
