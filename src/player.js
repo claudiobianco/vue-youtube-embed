@@ -70,6 +70,7 @@ export default {
       const { playerHeight, playerWidth, playerVars, videoId } = this
 
       this.player = new YouTube.Player(this.elementId, {
+        host: window && window.YTConfig && window.YTConfig['host'] ? window.YTConfig['host'] : 'https://www.youtube.com',
         height: playerHeight,
         width: playerWidth,
         playerVars,
